@@ -86,10 +86,10 @@ export default function ProfileScreen() {
 					}
 				color={
 					project.status === "in_progress"
-					? "#2196F3"  // Bleu pour in progress
+					? "#2196F3"
 					: project["validated?"]
-					? "#4CAF50"  // Vert pour réussi
-					: "#F44336"  // Rouge pour échoué
+					? "#4CAF50"
+					: "#F44336"
 				}
 				/>
 				)}>
