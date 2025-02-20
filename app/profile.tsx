@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Card, Avatar, Text, List, IconButton, FAB } from 'react-native-paper';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileScreen() {
-	const userData = localStorage.getItem('userData');
-	const user = userData ? JSON.parse(userData) : null;
+	const [user, setUser] = useState<any>(null);
+
+	useEffect(() => {
+	const loadUserData = async () => {
+		try {
+		const userData = await AsyncStorage.getItem('userData');
+		if (userData) {
+			setUser(JSON.parse(userData));
+		}
+		} catch (error) {
+		// console.error('Erreur lors du chargement des données:', error);
+		}
+	};
+	loadUserData();
+	}, []);
+
+	if (!user) return null;
 
 	return (
 	<View style={{ flex: 1 }}>
@@ -145,83 +161,83 @@ export default function ProfileScreen() {
 			{user.expertises_users.map((expertise: any) => {
 				const expertiseDetails = [
 					{id: 79, name: "Bootstrap"},
-				{id: 78, name: "Euskera"},
-				{id: 77, name: "Microsoft 365 Fundamentals"},
-				{id: 76, name: "Microsoft Azure Fundamentals"},
-				{id: 75, name: "Microsoft Power Platform Fundamentals"},
-				{id: 74, name: "Microsoft Azure AI Fundamentals"},
-				{id: 73, name: "Neo4j"},
-				{id: 72, name: "VueJs"},
-				{id: 71, name: "GCP"},
-				{id: 70, name: "Unix"},
-				{id: 69, name: "Kotlin"},
-				{id: 68, name: "R"},
-				{id: 67, name: "TypeScript"},
-				{id: 66, name: "Angular"},
-				{id: 65, name: "ASM"},
-				{id: 64, name: "Basic"},
-				{id: 63, name: "Cobol"},
-				{id: 62, name: "Objective-C"},
-				{id: 61, name: "Lua"},
-				{id: 60, name: "Unity"},
-				{id: 59, name: "Ocaml"},
-				{id: 58, name: "Django"},
-				{id: 57, name: "HyperV"},
-				{id: 56, name: "Exchange"},
-				{id: 55, name: "Active Directory"},
-				{id: 54, name: "Windows Server 20xx"},
-				{id: 53, name: "Puppet"},
-				{id: 52, name: "Ansible"},
-				{id: 51, name: "LDAP"},
-				{id: 50, name: "Joomla"},
-				{id: 49, name: "Phalcon"},
-				{id: 48, name: "Ember.js"},
-				{id: 47, name: "React"},
-				{id: 46, name: "Prestashop"},
-				{id: 45, name: "Photoshop"},
-				{id: 44, name: "Cryptography"},
-				{id: 43, name: "Elasticsearch"},
-				{id: 42, name: "jQuery"},
-				{id: 41, name: "iOS"},
-				{id: 40, name: "CPP"},
-				{id: 39, name: "Wordpress"},
-				{id: 38, name: "Symfony"},
-				{id: 37, name: "Swift"},
-				{id: 36, name: "Shell"},
-				{id: 35, name: "Scala"},
-				{id: 34, name: "Rust"},
-				{id: 33, name: "Ruby"},
-				{id: 32, name: "Redis"},
-				{id: 31, name: "Ruby on Rails"},
-				{id: 30, name: "Python"},
-				{id: 29, name: "PostgreSQL"},
-				{id: 28, name: "Perl"},
-				{id: 27, name: "PHP"},
-				{id: 26, name: "Node.js"},
-				{id: 25, name: "Nginx"},
-				{id: 24, name: "MySQL"},
-				{id: 23, name: "MongoDB"},
-				{id: 22, name: "Meteor"},
-				{id: 21, name: "MSSQL"},
-				{id: 20, name: "Laravel"},
-				{id: 19, name: "JavaScript"},
-				{id: 18, name: "Java"},
-				{id: 17, name: "Haskell"},
-				{id: 16, name: "HTML"},
-				{id: 15, name: "Go"},
-				{id: 14, name: "Erlang"},
-				{id: 13, name: "Elixir"},
-				{id: 12, name: "Docker"},
-				{id: 10, name: "Clojure"},
-				{id: 9, name: "Cassandra"},
-				{id: 8, name: "CSS"},
-				{id: 7, name: "C#"},
-				{id: 6, name: "C"},
-				{id: 5, name: "Apache"},
-				{id: 4, name: "AngularJS"},
-				{id: 3, name: "Android"},
-				{id: 2, name: "AWS"},
-				{id: 1, name: ".NET"}
+					{id: 78, name: "Euskera"},
+					{id: 77, name: "Microsoft 365 Fundamentals"},
+					{id: 76, name: "Microsoft Azure Fundamentals"},
+					{id: 75, name: "Microsoft Power Platform Fundamentals"},
+					{id: 74, name: "Microsoft Azure AI Fundamentals"},
+					{id: 73, name: "Neo4j"},
+					{id: 72, name: "VueJs"},
+					{id: 71, name: "GCP"},
+					{id: 70, name: "Unix"},
+					{id: 69, name: "Kotlin"},
+					{id: 68, name: "R"},
+					{id: 67, name: "TypeScript"},
+					{id: 66, name: "Angular"},
+					{id: 65, name: "ASM"},
+					{id: 64, name: "Basic"},
+					{id: 63, name: "Cobol"},
+					{id: 62, name: "Objective-C"},
+					{id: 61, name: "Lua"},
+					{id: 60, name: "Unity"},
+					{id: 59, name: "Ocaml"},
+					{id: 58, name: "Django"},
+					{id: 57, name: "HyperV"},
+					{id: 56, name: "Exchange"},
+					{id: 55, name: "Active Directory"},
+					{id: 54, name: "Windows Server 20xx"},
+					{id: 53, name: "Puppet"},
+					{id: 52, name: "Ansible"},
+					{id: 51, name: "LDAP"},
+					{id: 50, name: "Joomla"},
+					{id: 49, name: "Phalcon"},
+					{id: 48, name: "Ember.js"},
+					{id: 47, name: "React"},
+					{id: 46, name: "Prestashop"},
+					{id: 45, name: "Photoshop"},
+					{id: 44, name: "Cryptography"},
+					{id: 43, name: "Elasticsearch"},
+					{id: 42, name: "jQuery"},
+					{id: 41, name: "iOS"},
+					{id: 40, name: "CPP"},
+					{id: 39, name: "Wordpress"},
+					{id: 38, name: "Symfony"},
+					{id: 37, name: "Swift"},
+					{id: 36, name: "Shell"},
+					{id: 35, name: "Scala"},
+					{id: 34, name: "Rust"},
+					{id: 33, name: "Ruby"},
+					{id: 32, name: "Redis"},
+					{id: 31, name: "Ruby on Rails"},
+					{id: 30, name: "Python"},
+					{id: 29, name: "PostgreSQL"},
+					{id: 28, name: "Perl"},
+					{id: 27, name: "PHP"},
+					{id: 26, name: "Node.js"},
+					{id: 25, name: "Nginx"},
+					{id: 24, name: "MySQL"},
+					{id: 23, name: "MongoDB"},
+					{id: 22, name: "Meteor"},
+					{id: 21, name: "MSSQL"},
+					{id: 20, name: "Laravel"},
+					{id: 19, name: "JavaScript"},
+					{id: 18, name: "Java"},
+					{id: 17, name: "Haskell"},
+					{id: 16, name: "HTML"},
+					{id: 15, name: "Go"},
+					{id: 14, name: "Erlang"},
+					{id: 13, name: "Elixir"},
+					{id: 12, name: "Docker"},
+					{id: 10, name: "Clojure"},
+					{id: 9, name: "Cassandra"},
+					{id: 8, name: "CSS"},
+					{id: 7, name: "C#"},
+					{id: 6, name: "C"},
+					{id: 5, name: "Apache"},
+					{id: 4, name: "AngularJS"},
+					{id: 3, name: "Android"},
+					{id: 2, name: "AWS"},
+					{id: 1, name: ".NET"}
 			];
 			const expertiseDetail = expertiseDetails.find(exp => exp.id === expertise.expertise_id);
 			return (

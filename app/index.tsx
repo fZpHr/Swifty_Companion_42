@@ -3,6 +3,7 @@ import { TextInput, Button } from 'react-native-paper';
 import { useState } from 'react';
 import { router } from 'expo-router';
 import { getUser } from '../api/api42';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SearchScreen() {
   const [login, setLogin] = useState('');
@@ -13,14 +14,11 @@ export default function SearchScreen() {
       alert('Veuillez entrer un login valide');
       return;
     }
-
     setLoading(true);
     try {
       const userData = await getUser(login);
-      localStorage.setItem('userData', JSON.stringify(userData));
-      router.push({
-        pathname: "/profile",
-      });
+      await AsyncStorage.setItem('userData', JSON.stringify(userData));
+      router.push('/profile');
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
@@ -33,16 +31,16 @@ export default function SearchScreen() {
   };
 
   return (
-    <View style={{ padding: 20, alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+    <View style={{ flex: 1, padding: 20, justifyContent: 'center' }}>
       <TextInput
         label="Login 42"
         value={login}
         onChangeText={setLogin}
         mode="outlined"
         disabled={loading}
+        style={{ marginBottom: 20 }}
       />
       <Button 
-        style={{ marginTop: 10 }}
         mode="contained"
         onPress={handleSearch}
         loading={loading}
